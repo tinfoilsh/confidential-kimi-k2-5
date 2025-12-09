@@ -1,0 +1,40 @@
+shim-version: v0.2.15@sha256:5ca748b384b78b7e686b57ca66d9b3c552038ebab2ce60305004f76e573a8458
+cvm-version: 0.5.8
+cpus: 32
+memory: 524288
+gpus: full
+
+models:
+  - name: "kimi-k2-thinking"
+    repo: "moonshotai/Kimi-K2-Thinking@612681931a8c906ddb349f8ad0f582cb552189cd"
+    mpk: "83a9b1859995ac80eba3e4d928ea04d1aaa6f855ed80f32eb75098526c272f2d_594256601088_69ba6dc2-989f-56d7-8ea2-db7d537f3725"
+  
+containers:
+  - name: "kimi-k2-thinking"
+    image: ""
+    args: [
+      "--runtime", "nvidia",
+      "--gpus", "all",
+      "--ipc", "host",  
+      "vllm/vllm-openai:v0.12.0@sha256:6766ce0c459e24b76f3e9ba14ffc0442131ef4248c904efdcbf0d89e38be01fe",
+      "--model", "/tinfoil/mpk/mpk-83a9b1859995ac80eba3e4d928ea04d1aaa6f855ed80f32eb75098526c272f2d",
+      "--tensor-parallel-size", "8",
+      "--decode-context-parallel-size", "8",
+      "--served-model-name", "kimi-k2-thinking",
+      "--enable-auto-tool-choice",
+      "--tool-call-parser", "kimi_k2",
+      "--reasoning-parser", "kimi_k2",
+      "--trust-remote-code",
+      "--port", "8001"
+    ]
+
+shim:
+  listen-port: 443
+  upstream-port: 8001
+  publish-attestation: true
+  tls-challenge: dns  
+  control-plane: https://api.tinfoil.sh
+  paths:
+    - /v1/chat/completions
+    - /metrics
+    - /health

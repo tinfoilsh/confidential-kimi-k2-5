@@ -4,21 +4,21 @@ cpus: 32
 memory: 524288
 
 models:
-  - name: "kimi-k2-thinking"
-    repo: "moonshotai/Kimi-K2-Thinking@612681931a8c906ddb349f8ad0f582cb552189cd"
-    mpk: "83a9b1859995ac80eba3e4d928ea04d1aaa6f855ed80f32eb75098526c272f2d_594256601088_69ba6dc2-989f-56d7-8ea2-db7d537f3725"
+  - name: "kimi-k2.5"
+    repo: "moonshotai/Kimi-K2.5@2426b45b6af0da48d0dcce71bbce6225e5c73adc"
+    mpk: "c9c96761014910b27417cf54c778882504696b75c6f1239fdbb799a9570df304_595205046272_a0449c0d-91f4-55d8-851d-748c732abdec"
   
 containers:
   - name: "kimi-k2-thinking"
-    image: "vllm/vllm-openai:v0.14.1-cu130@sha256:6fc52be4609fc19b09c163be2556976447cc844b8d0d817f19bc9e1f44b48d5a"
+    image: "vllm/vllm-openai:v0.15.0-cu130@sha256:3616a215acaf3748c88d4b7f37a63710fd4181e3732ef952c03778a32746ed60"
     runtime: nvidia
     gpus: all
     ipc: host
     command: [
-      "--model", "/tinfoil/mpk/mpk-83a9b1859995ac80eba3e4d928ea04d1aaa6f855ed80f32eb75098526c272f2d",
+      "--model", "/tinfoil/mpk/mpk-c9c96761014910b27417cf54c778882504696b75c6f1239fdbb799a9570df304",
       "--tensor-parallel-size", "8",
-      "--decode-context-parallel-size", "8",
-      "--served-model-name", "kimi-k2-thinking",
+      "--mm-encoder-tp-mode", "data",
+      "--served-model-name", "kimi-k2.5",
       "--enable-auto-tool-choice",
       "--tool-call-parser", "kimi_k2",
       "--reasoning-parser", "kimi_k2",

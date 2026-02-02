@@ -1,5 +1,5 @@
 shim-version: v0.3.12@sha256:b81f2295ae6750d61e94f810ce24077360001b6ec795d13643f3170df29e304d
-cvm-version: 0.6.4
+cvm-version: 0.6.5
 cpus: 32
 memory: 524288
 
@@ -14,6 +14,8 @@ containers:
     runtime: nvidia
     gpus: all
     ipc: host
+    env:
+      - LD_LIBRARY_PATH: "/usr/local/nvidia/lib64:/usr/local/nvidia/lib:/usr/lib/x86_64-linux-gnu"
     command: [
       "--model", "/tinfoil/mpk/mpk-c9c96761014910b27417cf54c778882504696b75c6f1239fdbb799a9570df304",
       "--tensor-parallel-size", "8",
